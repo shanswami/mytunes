@@ -18,12 +18,20 @@ var SongQueue = Songs.extend({
       // if song is the current song, remove it, and immediately call
       // play first. else we just remove song and trust song queue,
       // to play the right one next
-      this.remove(song);
-      this.playFirst();
+      if(song === this.at(0)) {
+        song.stop();
+        this.remove(song);
+        this.playFirst();
+      } else {
+        this.remove(song);
+      }
+      // this.playFirst();
     }, this);
   },
   playFirst: function() {
-    this.first().play();
+    if(this.length !== 0) {
+      this.first().play();
+    }
   }
 
 });
