@@ -15,8 +15,11 @@ var SongQueue = Songs.extend({
       }
     }, this);
     this.on('dequeue', function(song){
-      this.at(0).trigger('ended', this.model);
-
+      // if song is the current song, remove it, and immediately call
+      // play first. else we just remove song and trust song queue,
+      // to play the right one next
+      this.remove(song);
+      this.playFirst();
     }, this);
   },
   playFirst: function() {
